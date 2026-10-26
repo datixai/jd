@@ -1,13 +1,19 @@
-import { CalendarDays, Check, MapPin, MessageCircle, Phone, Plane, Users, Car, Heart, UtensilsCrossed, Smartphone, ChevronDown } from "lucide-react";
-import { families, nav, intro, regions, steps, waLink as makeWaLink } from "@/content/site";
+import { CalendarDays, Check, MapPin, MessageCircle, Phone, Plane, Users, Car, Heart, UtensilsCrossed, Smartphone, ChevronDown, Bus, CarFront, Truck, ExternalLink } from "lucide-react";
+import { families, intro, nav, regions, reels, steps, vehicles, waLink as makeWaLink, type Vehicle } from "@/content/site";
 import { getContent } from "@/lib/store";
-import { exists, listGallery } from "@/lib/media";
-import { Carousel, EnquiryForm, Header, Reveal, Tabs } from "@/components/client";
+import { exists } from "@/lib/media";
+import { Carousel, EnquiryForm, Header, ReelCard, Reveal, Tabs, WhatsAppFloat, WHATSAPP_PATH } from "@/components/client";
 import { Media } from "@/components/Media";
 import { Scene } from "@/components/Scene";
 import { Flags } from "@/components/Flags";
 
+export const dynamic = "force-dynamic";
+
 const pointIcons = [Plane, Car, Users, UtensilsCrossed, Smartphone, Heart];
+const vehicleIcons: Record<Vehicle["icon"], typeof Bus> = { van: Bus, car: Car, suv: CarFront, jeep: Truck };
+
+const HERO_VIDEO = "/media/reels/neelum.mp4";
+const HERO_POSTER = "/media/reels/neelum.jpg";
 
 function Instagram({ className = "" }: { className?: string }) {
   return (
@@ -27,6 +33,20 @@ function Facebook({ className = "" }: { className?: string }) {
   );
 }
 
+function Social({ href, label, children, external = true }: { href: string; label: string; children: React.ReactNode; external?: boolean }) {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      title={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="grid size-9 place-items-center rounded-full bg-white/10 text-white transition hover:bg-saffron hover:text-ink"
+    >
+      {children}
+    </a>
+  );
+}
+
 function SectionHead({ eyebrow, title, text, light = false }: { eyebrow: string; title: string; text?: string; light?: boolean }) {
   return (
     <Reveal className="mx-auto mb-12 max-w-2xl text-center">
@@ -37,41 +57,35 @@ function SectionHead({ eyebrow, title, text, light = false }: { eyebrow: string;
   );
 }
 
-export const dynamic = "force-dynamic";
-
 export default async function Home() {
   const { hero, contact, trips, faqs } = await getContent();
   const waLink = (text: string) => makeWaLink(contact.whatsapp, text);
-  const gallery = listGallery();
-  const heroVideo = exists("/media/hero.mp4");
-  const heroImage = exists("/media/hero.jpg");
+  const heroVideo = exists(HERO_VIDEO);
+  const reelList = reels.filter((r) => exists(`/media/reels/${r.file}.mp4`));
 
   return (
     <>
       <Header />
       <main id="top">
         {/* Hero */}
-        <section className="relative flex min-h-[100svh] items-end overflow-hidden bg-pine-dark text-white">
+        <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-pine-dark text-white">
           <div className="absolute inset-0">
             {heroVideo ? (
-              <video className="h-full w-full object-cover" src="/media/hero.mp4" poster={heroImage ? "/media/hero.jpg" : undefined} autoPlay muted loop playsInline />
-            ) : heroImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src="/media/hero.jpg" alt="Mountains in Kashmir" className="h-full w-full object-cover" />
+              <video className="h-full w-full object-cover" src={HERO_VIDEO} poster={HERO_POSTER} autoPlay muted loop playsInline />
             ) : (
               <Scene name="river" className="h-full w-full" />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-black/50" />
           </div>
-          <div className="relative mx-auto w-full max-w-[1200px] px-4 pt-32 pb-20 sm:pb-28">
+          <div className="relative mx-auto w-full max-w-[1200px] px-4 pt-32 pb-20 text-center sm:pb-28">
             <Reveal>
               <p className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold tracking-wide backdrop-blur">
                 <MapPin className="size-3.5 text-saffron" /> {hero.eyebrow}
               </p>
-              <h1 className="max-w-4xl text-4xl leading-[1.05] font-semibold sm:text-7xl">{hero.title}</h1>
+              <h1 className="mx-auto max-w-4xl text-4xl leading-[1.05] font-semibold sm:text-7xl">{hero.title}</h1>
               <p className="font-heading mt-4 text-2xl text-saffron italic sm:text-3xl">{hero.tagline}</p>
-              <p className="mt-5 max-w-2xl text-lg text-white/85">{hero.text}</p>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <p className="mx-auto mt-5 max-w-2xl text-lg text-white/85">{hero.text}</p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <a href={waLink("Assalam o Alaikum JD, I would like to plan a family trip.")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 font-semibold text-ink transition hover:brightness-110">
                   <MessageCircle className="size-5" /> WhatsApp JD
                 </a>
@@ -83,11 +97,11 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Pickup strip */}
+        {/* Places strip */}
         <div className="overflow-hidden bg-saffron py-3 text-ink">
           <div className="marquee flex w-max gap-10 text-sm font-semibold whitespace-nowrap">
             {[...Array(2)].flatMap((_, k) =>
-              [...families.pickups, "Neelum", "Poonch", "Hunza", "Skardu", "Swat", "Naran"].map((p) => (
+              [...families.pickups, "Neelum", "Poonch", "Hunza", "Skardu", "Swat", "Naran", "Islamabad", "Lahore", "Karachi"].map((p) => (
                 <span key={`${k}-${p}`} className="flex items-center gap-2">
                   <MapPin className="size-4" /> {p}
                 </span>
@@ -98,40 +112,36 @@ export default async function Home() {
 
         {/* Intro */}
         <section className="px-4 py-20 sm:py-28">
-          <div className="mx-auto grid max-w-[1200px] items-center gap-12 lg:grid-cols-2">
-            <Reveal>
-              <h2 className="text-3xl leading-tight font-semibold text-pine sm:text-5xl">{intro.title}</h2>
-            </Reveal>
-            <Reveal delay={150}>
+          <Reveal className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl leading-tight font-semibold text-pine sm:text-5xl">{intro.title}</h2>
+            <div className="mt-8">
               {intro.text.map((t) => (
                 <p key={t} className="mb-4 text-lg text-muted">{t}</p>
               ))}
-              <div className="mt-6 flex items-center gap-4">
-                <div className="font-heading grid size-14 place-items-center rounded-full bg-pine text-xl font-semibold text-saffron">JD</div>
-                <div>
-                  <p className="font-semibold">{contact.name}</p>
-                  <p className="text-sm text-muted">Trip organiser, Travel with JD</p>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+            </div>
+            <div className="mt-6 flex flex-col items-center gap-2">
+              <div className="font-heading grid size-14 place-items-center rounded-full bg-pine text-xl font-semibold text-saffron">JD</div>
+              <p className="font-semibold">{contact.name}</p>
+              <p className="text-sm text-muted">Trip organiser, Travel with JD</p>
+            </div>
+          </Reveal>
         </section>
 
         {/* Destinations */}
         <section id="destinations" className="bg-white px-4 py-20 sm:py-28">
           <div className="mx-auto max-w-[1200px]">
-            <SectionHead eyebrow="Destinations" title="Where would your family like to go?" text="From a weekend in Poonch to two weeks in the Karakoram." />
+            <SectionHead eyebrow="Destinations" title="Where would your family like to go?" text="From a weekend in Poonch to two weeks in the Karakoram, or a few days in the big cities." />
             <Tabs
               labels={regions.map((r) => r.label)}
               panels={regions.map((r) => (
                 <div key={r.id}>
                   <p className="mx-auto mb-8 max-w-2xl text-center text-muted">{r.intro}</p>
-                  <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="flex flex-wrap justify-center gap-5">
                     {r.places.map((p) => (
-                      <article key={p.name} className="group relative aspect-[3/4] overflow-hidden rounded-[18px]">
+                      <article key={p.name} className="group relative aspect-[3/4] w-full overflow-hidden rounded-[18px] sm:w-[calc(50%-10px)] lg:w-[calc(25%-15px)]">
                         <Media image={p.image} scene={p.scene} alt={p.name} className="transition duration-700 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                        <div className="absolute inset-x-0 bottom-0 p-5 text-center text-white">
                           <h3 className="text-2xl font-semibold">{p.name}</h3>
                           <p className="mt-1 text-sm text-white/80">{p.text}</p>
                         </div>
@@ -150,7 +160,7 @@ export default async function Home() {
             <SectionHead eyebrow="Trips" title="Popular family trips" text="Every trip can be changed to suit your dates, group and budget." />
             <Carousel>
               {trips.map((t) => (
-                <article key={t.title} className="flex w-[300px] shrink-0 snap-start flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_10px_30px_rgba(15,61,46,0.08)] sm:w-[340px]">
+                <article key={t.title} className="flex w-[300px] shrink-0 snap-start flex-col overflow-hidden rounded-[18px] bg-white text-center shadow-[0_10px_30px_rgba(15,61,46,0.08)] sm:w-[340px]">
                   <div className="relative h-52 overflow-hidden">
                     <Media image={t.image} scene={t.scene} alt={t.title} />
                     <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-pine">
@@ -162,7 +172,7 @@ export default async function Home() {
                     <h3 className="mt-1 text-xl font-semibold">{t.title}</h3>
                     <ul className="mt-4 mb-6 space-y-2 text-sm text-muted">
                       {t.highlights.map((h) => (
-                        <li key={h} className="flex items-center gap-2">
+                        <li key={h} className="flex items-center justify-center gap-2">
                           <Check className="size-4 text-pine" /> {h}
                         </li>
                       ))}
@@ -177,6 +187,35 @@ export default async function Home() {
           </div>
         </section>
 
+        {/* Vehicles */}
+        <section id="vehicles" className="bg-white px-4 py-20 sm:py-28">
+          <div className="mx-auto max-w-[1200px]">
+            <SectionHead eyebrow="Vehicles" title="The right vehicle for every trip" text="From family vans to luxury 4x4s, the vehicles families in AJK know and trust, with experienced drivers. Provided with our partner Friends Motors." />
+            <div className="flex flex-wrap justify-center gap-5">
+              {vehicles.map((v, i) => {
+                const Icon = vehicleIcons[v.icon];
+                return (
+                  <Reveal key={v.name} delay={(i % 3) * 80} className="w-full rounded-[18px] border border-line bg-snow p-6 text-center sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
+                    <div className="mx-auto mb-4 grid size-14 place-items-center rounded-full bg-pine text-saffron">
+                      <Icon className="size-7" />
+                    </div>
+                    <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-lake">{v.type}</span>
+                    <h3 className="mt-3 text-xl font-semibold text-pine">{v.name}</h3>
+                    <p className="mt-1 text-sm text-muted">Seats: {v.seats}</p>
+                    <p className="mt-1 text-sm text-muted">{v.best}</p>
+                  </Reveal>
+                );
+              })}
+            </div>
+            <div className="mt-10 text-center">
+              <a href={contact.vehiclesUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-saffron px-8 py-3.5 font-semibold text-ink transition hover:brightness-110">
+                Book vehicle <ExternalLink className="size-4" />
+              </a>
+              <p className="mt-3 text-sm text-muted">Opens the Friends Motors booking page</p>
+            </div>
+          </div>
+        </section>
+
         {/* Families */}
         <section id="families" className="bg-pine px-4 py-20 text-white sm:py-28">
           <div className="mx-auto max-w-[1200px]">
@@ -185,8 +224,8 @@ export default async function Home() {
               {families.points.map((p, i) => {
                 const Icon = pointIcons[i];
                 return (
-                  <Reveal key={p.title} delay={i * 80} className="rounded-[18px] border border-white/10 bg-white/5 p-7">
-                    <Icon className="mb-4 size-8 text-saffron" />
+                  <Reveal key={p.title} delay={i * 80} className="rounded-[18px] border border-white/10 bg-white/5 p-7 text-center">
+                    <Icon className="mx-auto mb-4 size-8 text-saffron" />
                     <h3 className="text-xl font-semibold">{p.title}</h3>
                     <p className="mt-2 text-white/70">{p.text}</p>
                   </Reveal>
@@ -208,7 +247,7 @@ export default async function Home() {
         <section className="px-4 py-20 sm:py-28">
           <div className="mx-auto max-w-[1200px]">
             <SectionHead eyebrow="How it works" title="From one message to the mountains" />
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
               {steps.map((s, i) => (
                 <Reveal key={s.title} delay={i * 100}>
                   <p className="font-heading text-6xl font-semibold text-saffron">0{i + 1}</p>
@@ -220,32 +259,15 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Gallery */}
+        {/* Gallery (JD's reels) */}
         <section id="gallery" className="bg-white px-4 py-20 sm:py-28">
           <div className="mx-auto max-w-[1200px]">
-            <SectionHead eyebrow={contact.instagramHandle} title="Moments from our trips" text="Photos and videos from JD's trips. Follow along on Instagram and Facebook." />
-            {gallery.length > 0 ? (
-              <div className="columns-2 gap-4 sm:columns-3 lg:columns-4">
-                {gallery.map((m) => (
-                  <div key={m.src} className="mb-4 break-inside-avoid overflow-hidden rounded-[18px]">
-                    {m.type === "video" ? (
-                      <video src={m.src} className="w-full" muted loop playsInline autoPlay preload="metadata" />
-                    ) : (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={m.src} alt="Travel with JD trip" loading="lazy" className="w-full transition duration-500 hover:scale-105" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {(["peaks", "lake", "meadow", "forest", "river", "valley", "lake", "peaks"] as const).map((s, i) => (
-                  <div key={i} className={`overflow-hidden rounded-[18px] ${i % 3 === 0 ? "aspect-[3/4]" : "aspect-square"}`}>
-                    <Scene name={s} className="h-full w-full" />
-                  </div>
-                ))}
-              </div>
-            )}
+            <SectionHead eyebrow={contact.instagramHandle} title="Moments from our trips" text="Reels from JD's trips across Azad Jammu Kashmir. Tap any one to play it." />
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {reelList.map((r) => (
+                <ReelCard key={r.file} video={`/media/reels/${r.file}.mp4`} poster={`/media/reels/${r.file}.jpg`} title={r.title} />
+              ))}
+            </div>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-pine px-6 py-3 font-semibold text-white transition hover:brightness-125">
                 <Instagram className="size-5" /> Follow on Instagram
@@ -263,10 +285,10 @@ export default async function Home() {
             <SectionHead eyebrow="FAQ" title="Questions families ask" />
             <div className="divide-y divide-line rounded-[18px] border border-line bg-white">
               {faqs.map((f) => (
-                <details key={f.q} className="group p-6">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-pine">
+                <details key={f.q} className="group p-6 text-center">
+                  <summary className="relative flex cursor-pointer list-none items-center justify-center px-8 text-lg font-semibold text-pine">
                     {f.q}
-                    <ChevronDown className="size-5 shrink-0 transition group-open:rotate-180" />
+                    <ChevronDown className="absolute right-0 size-5 shrink-0 transition group-open:rotate-180" />
                   </summary>
                   <p className="mt-3 text-muted">{f.a}</p>
                 </details>
@@ -278,24 +300,24 @@ export default async function Home() {
         {/* Plan / enquiry */}
         <section id="plan" className="relative overflow-hidden bg-pine-dark px-4 py-20 text-white sm:py-28">
           <Scene name="peaks" className="absolute inset-0 h-full w-full opacity-15" />
-          <div className="relative mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-2">
+          <div className="relative mx-auto max-w-3xl text-center">
             <Reveal>
               <p className="mb-3 text-xs font-bold tracking-[0.2em] text-saffron uppercase">Plan my trip</p>
               <h2 className="text-3xl leading-tight font-semibold sm:text-5xl">Coming home soon? Let&apos;s plan the trip.</h2>
               <p className="mt-4 text-lg text-white/75">Fill in a few details and the message opens in WhatsApp, ready to send to JD. Or call him directly.</p>
-              <div className="mt-8 space-y-3">
-                <a href={`tel:${contact.phoneTel}`} className="flex items-center gap-3 text-lg font-semibold hover:text-saffron">
+              <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-3">
+                <a href={`tel:${contact.phoneTel}`} className="flex items-center gap-2 font-semibold hover:text-saffron">
                   <Phone className="size-5 text-saffron" /> {contact.phoneDisplay}
                 </a>
-                <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-saffron">
+                <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-saffron">
                   <Instagram className="size-5 text-saffron" /> {contact.instagramHandle}
                 </a>
-                <a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-saffron">
-                  <Facebook className="size-5 text-saffron" /> Travel with JD on Facebook
+                <a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-saffron">
+                  <Facebook className="size-5 text-saffron" /> Facebook
                 </a>
               </div>
             </Reveal>
-            <Reveal delay={150} className="rounded-[22px] border border-white/15 bg-white/5 p-6 backdrop-blur sm:p-8">
+            <Reveal delay={150} className="mt-10 rounded-[22px] border border-white/15 bg-white/5 p-6 text-left backdrop-blur sm:p-8">
               <EnquiryForm whatsapp={contact.whatsapp} firstName={contact.name.split(" ")[0]} />
             </Reveal>
           </div>
@@ -303,16 +325,21 @@ export default async function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#061c15] px-4 pt-16 pb-8 text-white">
+      <footer className="bg-[#061c15] px-4 pt-16 pb-8 text-center text-white">
         <div className="mx-auto max-w-[1200px]">
           <div className="grid gap-10 border-b border-white/10 pb-12 md:grid-cols-3">
-            <div>
+            <div className="flex flex-col items-center">
               <p className="font-heading text-3xl font-semibold">
                 Travel with <span className="text-saffron">JD</span>
               </p>
-              <p className="mt-3 max-w-xs text-white/60">Family trips to Azad Kashmir, Gilgit-Baltistan and Swat, organised by {contact.name}.</p>
-              <div className="mt-6">
-                <Flags />
+              <p className="mt-3 max-w-xs text-white/60">Family trips to Azad Jammu Kashmir, Gilgit-Baltistan, Swat and the big cities, organised by {contact.name}.</p>
+              <div className="mt-5 flex justify-center gap-2">
+                <Social href={waLink("Assalam o Alaikum JD")} label="WhatsApp">
+                  <svg viewBox="0 0 32 32" className="size-4 fill-current" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
+                </Social>
+                <Social href={contact.instagram} label="Instagram"><Instagram className="size-4" /></Social>
+                <Social href={contact.facebook} label="Facebook"><Facebook className="size-4" /></Social>
+                <Social href={`tel:${contact.phoneTel}`} label="Call" external={false}><Phone className="size-4" /></Social>
               </div>
             </div>
             <div>
@@ -330,10 +357,14 @@ export default async function Home() {
                 <li><a href={waLink("Assalam o Alaikum JD")} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">WhatsApp</a></li>
                 <li><a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Instagram</a></li>
                 <li><a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Facebook</a></li>
+                <li><a href={contact.vehiclesUrl} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Book vehicle</a></li>
               </ul>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-between gap-3 pt-6 text-sm text-white/60 sm:flex-row">
+          <div className="flex justify-center pt-8">
+            <Flags />
+          </div>
+          <div className="mt-6 flex flex-col items-center gap-2 text-sm text-white/60">
             <p>&copy; {new Date().getFullYear()} Travel with JD. All rights reserved.</p>
             <p>
               Developed by{" "}
@@ -345,16 +376,7 @@ export default async function Home() {
         </div>
       </footer>
 
-      {/* Floating WhatsApp */}
-      <a
-        href={waLink("Assalam o Alaikum JD, I would like to plan a trip.")}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="WhatsApp JD"
-        className="fixed right-5 bottom-5 z-40 grid size-14 place-items-center rounded-full bg-[#25d366] text-white shadow-xl transition hover:scale-110"
-      >
-        <MessageCircle className="size-7" />
-      </a>
+      <WhatsAppFloat whatsapp={contact.whatsapp} />
     </>
   );
 }

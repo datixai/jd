@@ -123,6 +123,7 @@ export function AdminDashboard({ initial, enquiries }: { initial: SiteContent; e
               <Field name="Instagram handle" value={c.contact.instagramHandle} onChange={setContact("instagramHandle")} />
               <Field name="Instagram link" value={c.contact.instagram} onChange={setContact("instagram")} />
               <Field name="Facebook link" value={c.contact.facebook} onChange={setContact("facebook")} />
+              <Field name="Book vehicle link (Friends Motors)" value={c.contact.vehiclesUrl} onChange={setContact("vehiclesUrl")} />
             </div>
           </Card>
 
@@ -156,7 +157,7 @@ export function AdminDashboard({ initial, enquiries }: { initial: SiteContent; e
               ))}
             </div>
             <button
-              onClick={() => setC({ ...c, trips: [...c.trips, { title: "New trip", days: "3 days", region: "Azad Kashmir", highlights: [], scene: "valley" }] })}
+              onClick={() => setC({ ...c, trips: [...c.trips, { title: "New trip", days: "3 days", region: "Azad Jammu Kashmir", highlights: [], scene: "valley" }] })}
               className="mt-4 inline-flex items-center gap-2 rounded-full border border-pine px-4 py-2 text-sm font-semibold text-pine hover:bg-pine hover:text-white"
             >
               <Plus className="size-4" /> Add trip

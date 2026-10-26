@@ -61,6 +61,7 @@ function sanitize(raw: unknown): SiteContent {
       instagram: url(k.instagram),
       instagramHandle: str(k.instagramHandle, 60),
       facebook: url(k.facebook),
+      vehiclesUrl: url(k.vehiclesUrl),
     },
     trips: list(c.trips).slice(0, 30).map((t) => ({
       title: str(t.title, 100),
