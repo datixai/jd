@@ -1,52 +1,22 @@
 import { CalendarDays, Check, MapPin, MessageCircle, Phone, Plane, Users, Car, Heart, UtensilsCrossed, Smartphone, ChevronDown, Bus, CarFront, Truck, ExternalLink } from "lucide-react";
-import { families, intro, nav, regions, reels, steps, vehicles, waLink as makeWaLink, type Vehicle } from "@/content/site";
+import { families, intro, photos, regions, reels, steps, vehicles, waLink as makeWaLink } from "@/content/site";
 import { getContent } from "@/lib/store";
 import { exists } from "@/lib/media";
-import { Carousel, EnquiryForm, Header, HeroVideo, ReelCard, Tabs, WhatsAppFloat, WHATSAPP_PATH } from "@/components/client";
+import { Carousel, EnquiryForm, Header, HeroVideo, Tabs, WhatsAppFloat } from "@/components/client";
+import { Vehicles } from "@/components/Vehicles";
+import { Gallery } from "@/components/Gallery";
 import { Reveal } from "@/components/Reveal";
-import { Logo } from "@/components/Logo";
+import { SiteFooter } from "@/components/SiteFooter";
+import { Facebook, Instagram } from "@/components/SocialIcons";
 import { SITE_URL } from "@/lib/site-url";
 import { Media } from "@/components/Media";
 import { Scene } from "@/components/Scene";
 import { Flags } from "@/components/Flags";
 
 const pointIcons = [Plane, Car, Users, UtensilsCrossed, Smartphone, Heart];
-const vehicleIcons: Record<Vehicle["icon"], typeof Bus> = { van: Bus, car: Car, suv: CarFront, jeep: Truck };
 
 const HERO_VIDEO = "/media/reels/neelum.mp4";
 const HERO_POSTER = "/media/reels/neelum.webp";
-
-function Instagram({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className} aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-    </svg>
-  );
-}
-
-function Facebook({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M14 8h3V4h-3c-2.8 0-4.5 1.9-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V9c0-.6.4-1 1-1Z" />
-    </svg>
-  );
-}
-
-function Social({ href, label, children, external = true }: { href: string; label: string; children: React.ReactNode; external?: boolean }) {
-  return (
-    <a
-      href={href}
-      aria-label={label}
-      title={label}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="grid size-9 place-items-center rounded-full bg-white/10 text-white transition hover:bg-saffron hover:text-ink"
-    >
-      {children}
-    </a>
-  );
-}
 
 function SectionHead({ eyebrow, title, text, light = false }: { eyebrow: string; title: string; text?: string; light?: boolean }) {
   return (
@@ -62,7 +32,8 @@ export default async function Home() {
   const { hero, contact, trips, faqs } = await getContent();
   const waLink = (text: string) => makeWaLink(contact.whatsapp, text);
   const heroVideo = exists(HERO_VIDEO);
-  const reelList = reels.filter((r) => exists(`/media/reels/${r.file}.mp4`));
+  const reelList = reels.filter((r) => exists(`/media/${r.file}.mp4`));
+  const photoList = photos.filter((p) => exists(`/media/${p.file}.webp`));
 
   const jsonLd = [
     {
@@ -103,7 +74,7 @@ export default async function Home() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-black/50" />
           </div>
           <div className="relative mx-auto w-full max-w-[1200px] px-4 pt-32 pb-20 text-center sm:pb-28">
-            <div>
+            <div className="hero-in">
               <p className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold tracking-wide backdrop-blur">
                 <MapPin className="size-3.5 text-saffron" /> {hero.eyebrow}
               </p>
@@ -121,19 +92,6 @@ export default async function Home() {
             </div>
           </div>
         </section>
-
-        {/* Places strip */}
-        <div className="overflow-hidden bg-saffron py-3 text-ink">
-          <div className="marquee flex w-max gap-10 text-sm font-semibold whitespace-nowrap">
-            {[...Array(2)].flatMap((_, k) =>
-              [...families.pickups, "Neelum", "Poonch", "Hunza", "Skardu", "Swat", "Naran", "Islamabad", "Lahore", "Karachi"].map((p) => (
-                <span key={`${k}-${p}`} className="flex items-center gap-2">
-                  <MapPin className="size-4" /> {p}
-                </span>
-              )),
-            )}
-          </div>
-        </div>
 
         {/* Intro */}
         <section className="px-4 py-20 sm:py-28">
@@ -202,50 +160,29 @@ export default async function Home() {
                         </li>
                       ))}
                     </ul>
-                    <a href={waLink(`Assalam o Alaikum JD, please send me details and price for: ${t.title}`)} target="_blank" rel="noopener noreferrer" className="mt-auto rounded-full border border-pine py-2.5 text-center text-sm font-semibold text-pine transition hover:bg-pine hover:text-white">
-                      Ask for price
-                    </a>
+                    <div className="mt-auto grid gap-2">
+                      {t.slug && (
+                        <a href={`/trips/${t.slug}`} className="rounded-full bg-pine py-2.5 text-center text-sm font-semibold text-white transition hover:brightness-125">
+                          See full day by day plan
+                        </a>
+                      )}
+                      <a href={waLink(`Assalam o Alaikum JD, please send me details and price for: ${t.title}`)} target="_blank" rel="noopener noreferrer" className="rounded-full border border-pine py-2.5 text-center text-sm font-semibold text-pine transition hover:bg-pine hover:text-white">
+                        Ask for price
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}
             </Carousel>
+            <div className="mt-8 text-center">
+              <a href="/trips" className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 font-semibold text-ink transition hover:brightness-110">
+                See all trips with full plans
+              </a>
+            </div>
           </div>
         </section>
 
-        {/* Vehicles */}
-        <section id="vehicles" className="bg-white px-4 py-20 sm:py-28">
-          <div className="mx-auto max-w-[1200px]">
-            <SectionHead eyebrow="Vehicles" title="The right vehicle for every trip" text="From family vans to luxury 4x4s, the vehicles families in AJK know and trust, with experienced drivers. Provided with our partner Friends Motors." />
-            <div className="flex flex-wrap justify-center gap-5">
-              {vehicles.map((v, i) => {
-                const Icon = vehicleIcons[v.icon];
-                return (
-                  <Reveal key={v.name} delay={(i % 3) * 80} className="w-full overflow-hidden rounded-[18px] border border-line bg-snow text-center sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
-                    <div className="relative h-48 overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={v.image} alt={v.name} loading="lazy" className="h-full w-full object-cover transition duration-700 hover:scale-105" />
-                      <span className="absolute top-3 left-3 grid size-10 place-items-center rounded-full bg-pine text-saffron shadow">
-                        <Icon className="size-5" />
-                      </span>
-                    </div>
-                    <div className="p-6">
-                      <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-lake">{v.type}</span>
-                      <h3 className="mt-3 text-xl font-semibold text-pine">{v.name}</h3>
-                      <p className="mt-1 text-sm text-muted">Seats: {v.seats}</p>
-                      <p className="mt-1 text-sm text-muted">{v.best}</p>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-            <div className="mt-10 text-center">
-              <a href={contact.vehiclesUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-saffron px-8 py-3.5 font-semibold text-ink transition hover:brightness-110">
-                Book vehicle <ExternalLink className="size-4" />
-              </a>
-              <p className="mt-3 text-sm text-muted">Opens the Friends Motors booking page</p>
-            </div>
-          </div>
-        </section>
+        <Vehicles vehicles={vehicles} bookUrl={contact.vehiclesUrl} />
 
         {/* Families */}
         <section id="families" className="bg-pine px-4 py-20 text-white sm:py-28">
@@ -293,12 +230,8 @@ export default async function Home() {
         {/* Gallery (JD's reels) */}
         <section id="gallery" className="bg-white px-4 py-20 sm:py-28">
           <div className="mx-auto max-w-[1200px]">
-            <SectionHead eyebrow={contact.instagramHandle} title="Moments from our trips" text="Reels from JD's trips across Azad Jammu Kashmir. Tap any one to play it." />
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {reelList.map((r) => (
-                <ReelCard key={r.file} video={`/media/reels/${r.file}.mp4`} poster={`/media/reels/${r.file}.webp`} title={r.title} />
-              ))}
-            </div>
+            <SectionHead eyebrow={contact.instagramHandle} title="Moments from our trips" text="Videos and photos from JD's trips across Azad Jammu Kashmir, Gilgit-Baltistan and Swat. Tap a video to play it." />
+            <Gallery reels={reelList} photos={photoList} />
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-pine px-6 py-3 font-semibold text-white transition hover:brightness-125">
                 <Instagram className="size-5" /> Follow on Instagram
@@ -330,7 +263,9 @@ export default async function Home() {
 
         {/* Plan / enquiry */}
         <section id="plan" className="relative overflow-hidden bg-pine-dark px-4 py-20 text-white sm:py-28">
-          <Scene name="peaks" className="absolute inset-0 h-full w-full opacity-15" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/media/ig/minimarg.webp" alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-pine-dark/85 via-pine-dark/75 to-pine-dark/90" />
           <div className="relative mx-auto max-w-3xl text-center">
             <Reveal>
               <p className="mb-3 text-xs font-bold tracking-[0.2em] text-saffron uppercase">Plan my trip</p>
@@ -355,57 +290,7 @@ export default async function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[#061c15] px-4 pt-16 pb-8 text-center text-white">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="grid gap-10 border-b border-white/10 pb-12 md:grid-cols-3">
-            <div className="flex flex-col items-center">
-              <Logo light />
-              <p className="mt-3 max-w-xs text-white/60">Family trips to Azad Jammu Kashmir, Gilgit-Baltistan, Swat and the big cities, organised by {contact.name}.</p>
-              <div className="mt-5 flex justify-center gap-2">
-                <Social href={waLink("Assalam o Alaikum JD")} label="WhatsApp">
-                  <svg viewBox="0 0 32 32" className="size-4 fill-current" aria-hidden="true"><path d={WHATSAPP_PATH} /></svg>
-                </Social>
-                <Social href={contact.instagram} label="Instagram"><Instagram className="size-4" /></Social>
-                <Social href={contact.facebook} label="Facebook"><Facebook className="size-4" /></Social>
-                <Social href={`tel:${contact.phoneTel}`} label="Call" external={false}><Phone className="size-4" /></Social>
-              </div>
-            </div>
-            <div>
-              <p className="mb-3 font-semibold">Explore</p>
-              <ul className="space-y-2 text-white/70">
-                {nav.map((n) => (
-                  <li key={n.href}><a href={n.href} className="hover:text-saffron">{n.label}</a></li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="mb-3 font-semibold">Contact</p>
-              <ul className="space-y-2 text-white/70">
-                <li><a href={`tel:${contact.phoneTel}`} className="hover:text-saffron">{contact.phoneDisplay}</a></li>
-                <li><a href={waLink("Assalam o Alaikum JD")} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">WhatsApp</a></li>
-                <li><a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Instagram</a></li>
-                <li><a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Facebook</a></li>
-                <li><a href={contact.vehiclesUrl} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Book vehicle</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex flex-col gap-4 pt-8 text-left text-sm text-white/60 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <Flags />
-              <p className="mt-4">&copy; {new Date().getFullYear()} JD Travels. All rights reserved.</p>
-            </div>
-            <p>
-              Developed by{" "}
-              <a href="https://datixai.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-saffron hover:underline">
-                Datix AI
-              </a>
-              <span className="mx-2">|</span>
-              <a href="/credits" className="hover:text-saffron">Photo credits</a>
-            </p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter contact={contact} />
 
       <WhatsAppFloat whatsapp={contact.whatsapp} />
     </>

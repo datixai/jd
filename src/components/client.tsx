@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Menu, X, ChevronLeft, ChevronRight, Send, Play } from "lucide-react";
 import { nav, waLink } from "@/content/site";
 import { Logo } from "./Logo";
+import { WHATSAPP_PATH } from "@/lib/whatsapp";
 import { submitEnquiry } from "@/app/actions";
 
 export function Header() {
@@ -25,7 +26,7 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex h-18 max-w-[1200px] items-center justify-between px-4 py-4 text-white">
-        <a href="#top" aria-label="JD Travels home">
+        <a href="/" aria-label="JD Travels home">
           <Logo light />
         </a>
         <nav className="hidden items-center gap-7 text-sm font-medium lg:flex">
@@ -34,7 +35,7 @@ export function Header() {
               {n.label}
             </a>
           ))}
-          <a href="#plan" className="rounded-full bg-saffron px-5 py-2.5 font-semibold text-ink transition hover:brightness-110">
+          <a href="/#plan" className="rounded-full bg-saffron px-5 py-2.5 font-semibold text-ink transition hover:brightness-110">
             Plan my trip
           </a>
         </nav>
@@ -49,7 +50,7 @@ export function Header() {
               {n.label}
             </a>
           ))}
-          <a href="#plan" onClick={() => setOpen(false)} className="mt-2 rounded-full bg-saffron px-5 py-3 text-center font-semibold text-ink">
+          <a href="/#plan" onClick={() => setOpen(false)} className="mt-2 rounded-full bg-saffron px-5 py-3 text-center font-semibold text-ink">
             Plan my trip
           </a>
         </nav>
@@ -149,8 +150,6 @@ Where: ${f.where}`;
   );
 }
 
-export const WHATSAPP_PATH =
-  "M16.004 3.2c-7.06 0-12.79 5.73-12.793 12.786a12.74 12.74 0 0 0 1.745 6.436L3.2 28.8l6.53-1.712a12.78 12.78 0 0 0 6.27 1.597h.005c7.055 0 12.786-5.73 12.79-12.787A12.71 12.71 0 0 0 25.05 6.94a12.71 12.71 0 0 0-9.046-3.74Zm0 23.35h-.004a10.62 10.62 0 0 1-5.41-1.48l-.388-.23-4.026 1.056 1.074-3.926-.253-.403a10.6 10.6 0 0 1-1.625-5.66c.002-5.866 4.774-10.637 10.636-10.637a10.56 10.56 0 0 1 7.517 3.117 10.56 10.56 0 0 1 3.11 7.527c-.002 5.866-4.774 10.636-10.63 10.636Zm5.83-7.965c-.32-.16-1.89-.932-2.183-1.039-.293-.107-.506-.16-.72.16-.212.32-.825 1.039-1.012 1.252-.186.213-.373.24-.692.08-.32-.16-1.35-.498-2.57-1.586-.95-.847-1.592-1.894-1.778-2.213-.187-.32-.02-.492.14-.651.144-.143.32-.373.48-.56.16-.186.213-.32.32-.532.107-.213.053-.4-.027-.56-.08-.16-.72-1.734-.986-2.374-.26-.624-.524-.54-.72-.55l-.613-.01c-.213 0-.56.08-.852.4-.293.32-1.119 1.093-1.119 2.667s1.146 3.094 1.305 3.307c.16.213 2.253 3.44 5.46 4.824.763.33 1.358.527 1.822.674.766.244 1.463.21 2.014.127.614-.092 1.89-.773 2.157-1.52.266-.746.266-1.386.186-1.52-.08-.133-.293-.213-.612-.373Z";
 
 export function WhatsAppFloat({ whatsapp }: { whatsapp: string }) {
   const [nudge, setNudge] = useState(false);
