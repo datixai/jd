@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Travel with JD</title>
+<meta name="description" content="Travel with JD: group trips organised by Junaid Shazad across Kashmir, Pakistan and the UK.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #0b6b3a;
+    --green-dark: #07442a;
+    --sand: #f6f1e7;
+    --ink: #1d2a24;
+    --muted: #5d6b64;
+    --accent: #f2a541;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Poppins", system-ui, sans-serif; color: var(--ink); background: var(--sand); line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+  /* Header */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(7, 68, 42, 0.95); color: var(--white); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 700; font-size: 1.25rem; letter-spacing: 0.5px; }
+  .logo span { color: var(--accent); }
+  .nav ul { display: flex; gap: 22px; list-style: none; font-size: 0.95rem; }
+  .nav ul a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero { position: relative; color: var(--white); background: linear-gradient(180deg, #1f6f8b 0%, #3f9bb5 45%, #9fd3c7 100%); overflow: hidden; }
+  .hero-inner { position: relative; z-index: 2; padding: 110px 0 170px; text-align: center; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; margin-bottom: 14px; text-shadow: 0 2px 12px rgba(0,0,0,0.25); }
+  .hero p { font-size: 1.1rem; max-width: 620px; margin: 0 auto 28px; opacity: 0.95; }
+  .btn { display: inline-block; background: var(--accent); color: var(--ink); font-weight: 600; padding: 12px 28px; border-radius: 30px; transition: transform 0.2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .mountains { position: absolute; bottom: 0; left: 0; width: 100%; height: 220px; z-index: 1; }
+
+  /* Sections */
+  section { padding: 70px 0; }
+  h2 { font-size: 2rem; text-align: center; margin-bottom: 10px; color: var(--green-dark); }
+  .sub { text-align: center; color: var(--muted); max-width: 620px; margin: 0 auto 40px; }
+
+  .about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: center; }
+  .avatar { width: 220px; height: 220px; border-radius: 50%; margin: 0 auto; background: linear-gradient(135deg, var(--green), var(--accent)); display: grid; place-items: center; color: var(--white); font-size: 4rem; font-weight: 700; }
+  .about-grid p { margin-bottom: 12px; color: var(--muted); }
+  .about-grid h3 { font-size: 1.5rem; color: var(--green-dark); margin-bottom: 8px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  .card { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.07); transition: transform 0.2s; }
+  .card:hover { transform: translateY(-4px); }
+  .card-img { height: 150px; }
+  .card-body { padding: 18px; }
+  .card-body h3 { font-size: 1.15rem; margin-bottom: 4px; }
+  .tag { display: inline-block; font-size: 0.75rem; font-weight: 600; background: var(--sand); color: var(--green); padding: 2px 10px; border-radius: 12px; margin-bottom: 8px; }
+  .card-body p { font-size: 0.92rem; color: var(--muted); }
+
+  .why { background: var(--white); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; text-align: center; }
+  .why-item .icon { font-size: 2.2rem; margin-bottom: 8px; }
+  .why-item h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .why-item p { font-size: 0.92rem; color: var(--muted); }
+
+  .contact-box { background: var(--green); color: var(--white); border-radius: 20px; padding: 40px 24px; text-align: center; }
+  .contact-box h2 { color: var(--white); }
+  .contact-box p { opacity: 0.9; margin-bottom: 22px; }
+
+  /* Footer */
+  footer { background: var(--green-dark); color: #d7e6dd; padding: 36px 0 24px; text-align: center; }
+  .flags { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-bottom: 18px; }
+  .flag { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 0.8rem; }
+  .flag svg { width: 60px; height: 40px; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+  .credit { font-size: 0.9rem; margin-top: 8px; }
+  .credit a { color: var(--accent); font-weight: 600; }
+  .credit a:hover { text-decoration: underline; }
+  .copy { font-size: 0.8rem; opacity: 0.7; margin-top: 6px; }
+
+  @media (max-width: 720px) {
+    .nav ul { gap: 14px; font-size: 0.85rem; }
+    .nav ul li:nth-child(3) { display: none; }
+    .about-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-inner { padding: 80px 0 150px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo">Travel with <span>JD</span></a>
+    <ul>
+      <li><a href="#trips">Trips</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#why">Why us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="hero" style="padding:0">
+  <div class="wrap hero-inner">
+    <h1>Explore the world,<br>one trip at a time</h1>
+    <p>Group trips and tours organised by Junaid Shazad. From the valleys of Kashmir to the mountains of Pakistan and the countryside of the UK.</p>
+    <a href="#trips" class="btn">View Trips</a>
+  </div>
+  <svg class="mountains" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#6aa89a" d="M0 160 L180 70 L320 140 L480 40 L640 130 L780 60 L960 150 L1120 50 L1280 120 L1440 80 L1440 220 L0 220 Z"/>
+    <path fill="#ffffff" opacity="0.85" d="M480 40 L520 62 L500 66 L470 58 Z M1120 50 L1160 72 L1140 76 L1108 68 Z"/>
+    <path fill="#2f7d5b" d="M0 190 L220 120 L400 180 L600 110 L820 185 L1020 125 L1220 180 L1440 130 L1440 220 L0 220 Z"/>
+    <path fill="#f6f1e7" d="M0 210 Q360 180 720 205 T1440 200 L1440 220 L0 220 Z"/>
+  </svg>
+</section>
+
+<section id="trips">
+  <div class="wrap">
+    <h2>Upcoming Trips</h2>
+    <p class="sub">A few of the journeys we organise. Full trip details and dates coming soon.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#2f7d5b,#9fd3c7)"></div>
+        <div class="card-body">
+          <span class="tag">Kashmir</span>
+          <h3>Neelum Valley</h3>
+          <p>Rivers, green meadows and peaceful villages in the heart of Kashmir.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#1f6f8b,#e3f1f4)"></div>
+        <div class="card-body">
+          <span class="tag">Pakistan</span>
+          <h3>Hunza and Skardu</h3>
+          <p>Snow peaks, blue lakes and the famous Karakoram Highway.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#c97b2a,#f6d9a8)"></div>
+        <div class="card-body">
+          <span class="tag">Pakistan</span>
+          <h3>Lahore Heritage Tour</h3>
+          <p>Historic forts, colourful bazaars and the best food in the country.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#3b5a8c,#b9c9e4)"></div>
+        <div class="card-body">
+          <span class="tag">UK</span>
+          <h3>Lake District and Scotland</h3>
+          <p>Lakes, castles and the beautiful Scottish Highlands.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="wrap about-grid">
+    <div class="avatar">JD</div>
+    <div>
+      <h3>Meet Junaid Shazad</h3>
+      <p>Junaid organises group trips for families, friends and travellers who want to see the best places without the stress of planning.</p>
+      <p>Every trip is planned with care: transport, stays and routes are all arranged, so you can simply enjoy the journey.</p>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="why">
+  <div class="wrap">
+    <h2>Why travel with JD</h2>
+    <p class="sub">Simple, safe and well planned trips.</p>
+    <div class="why-grid">
+      <div class="why-item"><div class="icon">🧭</div><h3>Planned for you</h3><p>Routes, hotels and transport all sorted.</p></div>
+      <div class="why-item"><div class="icon">👨‍👩‍👧</div><h3>Group friendly</h3><p>Great for families, friends and solo travellers.</p></div>
+      <div class="why-item"><div class="icon">🛡️</div><h3>Safe travel</h3><p>Trusted drivers and checked stays.</p></div>
+      <div class="why-item"><div class="icon">📸</div><h3>Great memories</h3><p>The best views and the best moments.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Ready for your next trip?</h2>
+      <p>Get in touch to join an upcoming trip or plan a custom tour for your group.</p>
+      <a href="#" class="btn">Contact JD</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="flags">
+      <div class="flag">
+        <!-- Azad Kashmir -->
+        <svg viewBox="0 0 120 80" aria-label="Kashmir flag" role="img">
+          <rect width="120" height="80" fill="#00843d"/>
+          <rect x="30" y="8.89" width="90" height="8.89" fill="#fff"/>
+          <rect x="30" y="26.67" width="90" height="8.89" fill="#fff"/>
+          <rect x="30" y="44.44" width="90" height="8.89" fill="#fff"/>
+          <rect x="30" y="62.22" width="90" height="8.89" fill="#fff"/>
+          <rect x="30" width="45" height="40" fill="#00843d"/>
+          <circle cx="52" cy="20" r="10" fill="#fff"/>
+          <circle cx="55.5" cy="18" r="8.5" fill="#00843d"/>
+          <polygon fill="#fff" points="63,11 64.2,14.6 68,14.6 64.9,16.8 66.1,20.4 63,18.2 59.9,20.4 61.1,16.8 58,14.6 61.8,14.6"/>
+          <rect width="30" height="80" fill="#f7a800"/>
+        </svg>
+        Kashmir
+      </div>
+      <div class="flag">
+        <!-- Pakistan -->
+        <svg viewBox="0 0 120 80" aria-label="Pakistan flag" role="img">
+          <rect width="120" height="80" fill="#01411c"/>
+          <rect width="30" height="80" fill="#fff"/>
+          <circle cx="78" cy="40" r="20" fill="#fff"/>
+          <circle cx="84" cy="35" r="17" fill="#01411c"/>
+          <polygon fill="#fff" points="90,22 92.1,28.3 98.7,28.3 93.4,32.2 95.4,38.5 90,34.6 84.6,38.5 86.6,32.2 81.3,28.3 87.9,28.3" transform="rotate(-35 90 30)"/>
+        </svg>
+        Pakistan
+      </div>
+      <div class="flag">
+        <!-- United Kingdom -->
+        <svg viewBox="0 0 60 40" aria-label="United Kingdom flag" role="img">
+          <clipPath id="uk"><rect width="60" height="40"/></clipPath>
+          <g clip-path="url(#uk)">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+          </g>
+        </svg>
+        UK
+      </div>
+    </div>
+    <p class="credit">Developed by <a href="https://datixai.com" target="_blank" rel="noopener">Datix AI</a></p>
+    <p class="copy">&copy; <span id="year"></span> Travel with JD. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
