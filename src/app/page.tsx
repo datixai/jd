@@ -195,14 +195,20 @@ export default async function Home() {
               {vehicles.map((v, i) => {
                 const Icon = vehicleIcons[v.icon];
                 return (
-                  <Reveal key={v.name} delay={(i % 3) * 80} className="w-full rounded-[18px] border border-line bg-snow p-6 text-center sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
-                    <div className="mx-auto mb-4 grid size-14 place-items-center rounded-full bg-pine text-saffron">
-                      <Icon className="size-7" />
+                  <Reveal key={v.name} delay={(i % 3) * 80} className="w-full overflow-hidden rounded-[18px] border border-line bg-snow text-center sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
+                    <div className="relative h-48 overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={v.image} alt={v.name} loading="lazy" className="h-full w-full object-cover transition duration-700 hover:scale-105" />
+                      <span className="absolute top-3 left-3 grid size-10 place-items-center rounded-full bg-pine text-saffron shadow">
+                        <Icon className="size-5" />
+                      </span>
                     </div>
-                    <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-lake">{v.type}</span>
-                    <h3 className="mt-3 text-xl font-semibold text-pine">{v.name}</h3>
-                    <p className="mt-1 text-sm text-muted">Seats: {v.seats}</p>
-                    <p className="mt-1 text-sm text-muted">{v.best}</p>
+                    <div className="p-6">
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-lake">{v.type}</span>
+                      <h3 className="mt-3 text-xl font-semibold text-pine">{v.name}</h3>
+                      <p className="mt-1 text-sm text-muted">Seats: {v.seats}</p>
+                      <p className="mt-1 text-sm text-muted">{v.best}</p>
+                    </div>
                   </Reveal>
                 );
               })}
@@ -371,6 +377,8 @@ export default async function Home() {
               <a href="https://datixai.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-saffron hover:underline">
                 Datix AI
               </a>
+              <span className="mx-2">|</span>
+              <a href="/credits" className="hover:text-saffron">Photo credits</a>
             </p>
           </div>
         </div>
