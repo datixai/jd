@@ -2,18 +2,19 @@ import { CalendarDays, Check, MapPin, MessageCircle, Phone, Plane, Users, Car, H
 import { families, intro, nav, regions, reels, steps, vehicles, waLink as makeWaLink, type Vehicle } from "@/content/site";
 import { getContent } from "@/lib/store";
 import { exists } from "@/lib/media";
-import { Carousel, EnquiryForm, Header, ReelCard, Reveal, Tabs, WhatsAppFloat, WHATSAPP_PATH } from "@/components/client";
+import { Carousel, EnquiryForm, Header, HeroVideo, ReelCard, Tabs, WhatsAppFloat, WHATSAPP_PATH } from "@/components/client";
+import { Reveal } from "@/components/Reveal";
+import { Logo } from "@/components/Logo";
+import { SITE_URL } from "@/lib/site-url";
 import { Media } from "@/components/Media";
 import { Scene } from "@/components/Scene";
 import { Flags } from "@/components/Flags";
-
-export const dynamic = "force-dynamic";
 
 const pointIcons = [Plane, Car, Users, UtensilsCrossed, Smartphone, Heart];
 const vehicleIcons: Record<Vehicle["icon"], typeof Bus> = { van: Bus, car: Car, suv: CarFront, jeep: Truck };
 
 const HERO_VIDEO = "/media/reels/neelum.mp4";
-const HERO_POSTER = "/media/reels/neelum.jpg";
+const HERO_POSTER = "/media/reels/neelum.webp";
 
 function Instagram({ className = "" }: { className?: string }) {
   return (
@@ -63,22 +64,46 @@ export default async function Home() {
   const heroVideo = exists(HERO_VIDEO);
   const reelList = reels.filter((r) => exists(`/media/reels/${r.file}.mp4`));
 
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      name: "JD Travels",
+      alternateName: "Travel with JD",
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon-512.png`,
+      image: `${SITE_URL}/opengraph-image.jpg`,
+      description: hero.text,
+      telephone: contact.phoneDisplay.replace(/\s/g, ""),
+      founder: { "@type": "Person", name: contact.name },
+      sameAs: [contact.instagram, contact.facebook],
+      areaServed: ["Azad Jammu Kashmir", "Gilgit-Baltistan", "Khyber Pakhtunkhwa", "Kotli", "Khuiratta", "Dadyal", "Mirpur", "Bolton", "United Kingdom"],
+      knowsAbout: ["Neelum Valley", "Arang Kel", "Toli Pir", "Hunza", "Skardu", "Swat", "Naran", "Family tours", "Car rental"],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    },
+  ];
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\" + "u003c") }} />
       <Header />
       <main id="top">
         {/* Hero */}
         <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-pine-dark text-white">
           <div className="absolute inset-0">
             {heroVideo ? (
-              <video className="h-full w-full object-cover" src={HERO_VIDEO} poster={HERO_POSTER} autoPlay muted loop playsInline />
+              <HeroVideo src={HERO_VIDEO} poster={HERO_POSTER} alt="Neelum Valley, Azad Jammu Kashmir" />
             ) : (
               <Scene name="river" className="h-full w-full" />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-black/50" />
           </div>
           <div className="relative mx-auto w-full max-w-[1200px] px-4 pt-32 pb-20 text-center sm:pb-28">
-            <Reveal>
+            <div>
               <p className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold tracking-wide backdrop-blur">
                 <MapPin className="size-3.5 text-saffron" /> {hero.eyebrow}
               </p>
@@ -93,7 +118,7 @@ export default async function Home() {
                   See trips
                 </a>
               </div>
-            </Reveal>
+            </div>
           </div>
         </section>
 
@@ -122,7 +147,7 @@ export default async function Home() {
             <div className="mt-6 flex flex-col items-center gap-2">
               <div className="font-heading grid size-14 place-items-center rounded-full bg-pine text-xl font-semibold text-saffron">JD</div>
               <p className="font-semibold">{contact.name}</p>
-              <p className="text-sm text-muted">Trip organiser, Travel with JD</p>
+              <p className="text-sm text-muted">Trip organiser, JD Travels</p>
             </div>
           </Reveal>
         </section>
@@ -271,7 +296,7 @@ export default async function Home() {
             <SectionHead eyebrow={contact.instagramHandle} title="Moments from our trips" text="Reels from JD's trips across Azad Jammu Kashmir. Tap any one to play it." />
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
               {reelList.map((r) => (
-                <ReelCard key={r.file} video={`/media/reels/${r.file}.mp4`} poster={`/media/reels/${r.file}.jpg`} title={r.title} />
+                <ReelCard key={r.file} video={`/media/reels/${r.file}.mp4`} poster={`/media/reels/${r.file}.webp`} title={r.title} />
               ))}
             </div>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
@@ -335,9 +360,7 @@ export default async function Home() {
         <div className="mx-auto max-w-[1200px]">
           <div className="grid gap-10 border-b border-white/10 pb-12 md:grid-cols-3">
             <div className="flex flex-col items-center">
-              <p className="font-heading text-3xl font-semibold">
-                Travel with <span className="text-saffron">JD</span>
-              </p>
+              <Logo light />
               <p className="mt-3 max-w-xs text-white/60">Family trips to Azad Jammu Kashmir, Gilgit-Baltistan, Swat and the big cities, organised by {contact.name}.</p>
               <div className="mt-5 flex justify-center gap-2">
                 <Social href={waLink("Assalam o Alaikum JD")} label="WhatsApp">
@@ -370,7 +393,7 @@ export default async function Home() {
           <div className="flex flex-col gap-4 pt-8 text-left text-sm text-white/60 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <Flags />
-              <p className="mt-4">&copy; {new Date().getFullYear()} Travel with JD. All rights reserved.</p>
+              <p className="mt-4">&copy; {new Date().getFullYear()} JD Travels. All rights reserved.</p>
             </div>
             <p>
               Developed by{" "}

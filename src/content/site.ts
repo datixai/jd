@@ -30,7 +30,7 @@ export const nav = [
 export type Hero = { eyebrow: string; title: string; tagline: string; text: string };
 
 export const hero: Hero = {
-  eyebrow: "Family trips from Kotli, Mirpur, Dadyal and Khuiratta",
+  eyebrow: "For Kotli, Khuiratta, Dadyal and Mirpur families in Bolton, the UK and abroad",
   title: "Home for the holidays. Now see the valleys.",
   tagline: "Apni wadiyan, apne log.",
   text: "Coming back from the UK or abroad? JD plans the whole trip for your family: pickup, van, hotels, food and the best views in Azad Jammu Kashmir, Gilgit-Baltistan and Swat.",
@@ -39,7 +39,7 @@ export const hero: Hero = {
 export const intro = {
   title: "You come home every year. When did you last see Neelum?",
   text: [
-    "Most families visiting from Birmingham, Bradford, Luton or Manchester spend the trip between weddings and relatives. The mountains are only a few hours away, but planning a safe trip with elders and children feels like too much.",
+    "Most families visiting from Bolton, Birmingham, Bradford, Luton or Manchester spend the trip between weddings and relatives. The mountains are only a few hours away, but planning a safe trip with elders and children feels like too much.",
     "That is where JD comes in. Junaid is from the area, knows the roads, the drivers and the hotels, and runs trips that are made for families. You tell him the dates, he handles the rest.",
   ],
 };
@@ -53,10 +53,10 @@ export const regions: Region[] = [
     label: "Azad Jammu Kashmir",
     intro: "Close to home and full of green valleys, rivers and cool hill stations. Perfect for a short family break.",
     places: [
-      { name: "Neelum Valley", text: "Keran, Sharda, Kel and Arang Kel along the blue Neelum river.", scene: "river", image: "/media/reels/neelum.jpg" },
-      { name: "Arang Kel", text: "A meadow village above Kel, reached by chairlift over the Neelum river.", scene: "meadow", image: "/media/reels/arangkel.jpg" },
-      { name: "Toli Pir", text: "Wide open meadows on top of Poonch with views for miles.", scene: "meadow", image: "/media/stock/tolipir.jpg" },
-      { name: "Lasdana, Bagh", text: "Pine forest roads and cool green meadows above Bagh.", scene: "forest", image: "/media/reels/lasdana.jpg" },
+      { name: "Neelum Valley", text: "Keran, Sharda, Kel and Arang Kel along the blue Neelum river.", scene: "river", image: "/media/reels/neelum.webp" },
+      { name: "Arang Kel", text: "A meadow village above Kel, reached by chairlift over the Neelum river.", scene: "meadow", image: "/media/reels/arangkel.webp" },
+      { name: "Toli Pir", text: "Wide open meadows on top of Poonch with views for miles.", scene: "meadow", image: "/media/stock/tolipir.webp" },
+      { name: "Lasdana, Bagh", text: "Pine forest roads and cool green meadows above Bagh.", scene: "forest", image: "/media/reels/lasdana.webp" },
     ],
   },
   {
@@ -64,10 +64,10 @@ export const regions: Region[] = [
     label: "Gilgit-Baltistan",
     intro: "The big mountains. Glaciers, turquoise lakes and the Karakoram Highway, for families ready for a longer trip.",
     places: [
-      { name: "Hunza", text: "Karimabad, Altit and Baltit forts, Attabad lake and Passu cones.", scene: "peaks", image: "/media/stock/hunza.jpg" },
-      { name: "Skardu", text: "Shangrila, Upper Kachura lake and the cold desert.", scene: "lake", image: "/media/stock/skardu.jpg" },
-      { name: "Naltar", text: "Colourful lakes in a pine forest valley.", scene: "forest", image: "/media/stock/naltar.jpg" },
-      { name: "Fairy Meadows", text: "A green meadow with Nanga Parbat right in front of you.", scene: "peaks", image: "/media/stock/fairymeadows.jpg" },
+      { name: "Hunza", text: "Karimabad, Altit and Baltit forts, Attabad lake and Passu cones.", scene: "peaks", image: "/media/stock/hunza.webp" },
+      { name: "Skardu", text: "Shangrila, Upper Kachura lake and the cold desert.", scene: "lake", image: "/media/stock/skardu.webp" },
+      { name: "Naltar", text: "Colourful lakes in a pine forest valley.", scene: "forest", image: "/media/stock/naltar.webp" },
+      { name: "Fairy Meadows", text: "A green meadow with Nanga Parbat right in front of you.", scene: "peaks", image: "/media/stock/fairymeadows.webp" },
     ],
   },
   {
@@ -75,10 +75,10 @@ export const regions: Region[] = [
     label: "Swat and KP",
     intro: "The Switzerland of the east. Rivers, waterfalls and easy roads, great for elders and young children.",
     places: [
-      { name: "Kalam and Mahodand", text: "A river valley with a lake surrounded by snow peaks.", scene: "lake", image: "/media/stock/kalam.jpg" },
-      { name: "Malam Jabba", text: "Chairlift and hill top views, snow in winter.", scene: "peaks", image: "/media/stock/malamjabba.jpg" },
-      { name: "Naran and Kaghan", text: "Saif ul Malook lake and the Babusar top drive.", scene: "valley", image: "/media/stock/naran.jpg" },
-      { name: "Murree and Nathia Gali", text: "A quick hill station escape near Islamabad.", scene: "forest", image: "/media/stock/nathiagali.jpg" },
+      { name: "Kalam and Mahodand", text: "A river valley with a lake surrounded by snow peaks.", scene: "lake", image: "/media/stock/kalam.webp" },
+      { name: "Malam Jabba", text: "Chairlift and hill top views, snow in winter.", scene: "peaks", image: "/media/stock/malamjabba.webp" },
+      { name: "Naran and Kaghan", text: "Saif ul Malook lake and the Babusar top drive.", scene: "valley", image: "/media/stock/naran.webp" },
+      { name: "Murree and Nathia Gali", text: "A quick hill station escape near Islamabad.", scene: "forest", image: "/media/stock/nathiagali.webp" },
     ],
   },
   {
@@ -86,9 +86,9 @@ export const regions: Region[] = [
     label: "Cities",
     intro: "Big city days for shopping, food and history, easy to add before or after the mountains.",
     places: [
-      { name: "Islamabad", text: "Faisal Mosque, Daman-e-Koh and dinner in the Margalla hills.", scene: "forest", image: "/media/stock/islamabad.jpg" },
-      { name: "Lahore", text: "Badshahi Mosque, the Walled City and the famous food streets.", scene: "meadow", image: "/media/stock/lahore.jpg" },
-      { name: "Karachi", text: "Clifton beach, Mazar-e-Quaid and seafood by the sea.", scene: "lake", image: "/media/stock/karachi.jpg" },
+      { name: "Islamabad", text: "Faisal Mosque, Daman-e-Koh and dinner in the Margalla hills.", scene: "forest", image: "/media/stock/islamabad.webp" },
+      { name: "Lahore", text: "Badshahi Mosque, the Walled City and the famous food streets.", scene: "meadow", image: "/media/stock/lahore.webp" },
+      { name: "Karachi", text: "Clifton beach, Mazar-e-Quaid and seafood by the sea.", scene: "lake", image: "/media/stock/karachi.webp" },
     ],
   },
 ];
@@ -96,14 +96,14 @@ export const regions: Region[] = [
 export type Trip = { title: string; days: string; region: string; highlights: string[]; scene: Scene; image?: string };
 
 export const trips: Trip[] = [
-  { title: "Neelum Valley Family Escape", days: "4 days", region: "Azad Jammu Kashmir", highlights: ["Keran and Sharda", "Arang Kel chairlift", "Riverside stays"], scene: "river", image: "/media/reels/arangkel.jpg" },
-  { title: "Poonch Weekend", days: "2 days", region: "Azad Jammu Kashmir", highlights: ["Banjosa lake", "Toli Pir", "Lasdana"], scene: "meadow", image: "/media/reels/lasdana.jpg" },
-  { title: "Hunza and Skardu Grand Tour", days: "8 days", region: "Gilgit-Baltistan", highlights: ["Attabad lake", "Passu cones", "Shangrila"], scene: "peaks", image: "/media/stock/attabad.jpg" },
-  { title: "Swat and Kalam", days: "5 days", region: "Khyber Pakhtunkhwa", highlights: ["Mahodand lake", "Malam Jabba", "Swat river"], scene: "lake", image: "/media/stock/swat.jpg" },
-  { title: "Naran, Kaghan and Babusar", days: "4 days", region: "Khyber Pakhtunkhwa", highlights: ["Saif ul Malook", "Lulusar lake", "Babusar top"], scene: "valley", image: "/media/stock/naran.jpg" },
-  { title: "Islamabad and Lahore City Break", days: "3 days", region: "Cities", highlights: ["Faisal Mosque", "Badshahi Mosque", "Food streets"], scene: "forest", image: "/media/stock/lahore.jpg" },
-  { title: "Karachi by the Sea", days: "3 days", region: "Cities", highlights: ["Clifton beach", "Mazar-e-Quaid", "Port Grand"], scene: "lake", image: "/media/stock/karachi.jpg" },
-  { title: "Custom family trip", days: "Your dates", region: "Anywhere", highlights: ["Your route", "Your group size", "Your budget"], scene: "forest", image: "/media/reels/kail.jpg" },
+  { title: "Neelum Valley Family Escape", days: "4 days", region: "Azad Jammu Kashmir", highlights: ["Keran and Sharda", "Arang Kel chairlift", "Riverside stays"], scene: "river", image: "/media/reels/arangkel.webp" },
+  { title: "Poonch Weekend", days: "2 days", region: "Azad Jammu Kashmir", highlights: ["Banjosa lake", "Toli Pir", "Lasdana"], scene: "meadow", image: "/media/reels/lasdana.webp" },
+  { title: "Hunza and Skardu Grand Tour", days: "8 days", region: "Gilgit-Baltistan", highlights: ["Attabad lake", "Passu cones", "Shangrila"], scene: "peaks", image: "/media/stock/attabad.webp" },
+  { title: "Swat and Kalam", days: "5 days", region: "Khyber Pakhtunkhwa", highlights: ["Mahodand lake", "Malam Jabba", "Swat river"], scene: "lake", image: "/media/stock/swat.webp" },
+  { title: "Naran, Kaghan and Babusar", days: "4 days", region: "Khyber Pakhtunkhwa", highlights: ["Saif ul Malook", "Lulusar lake", "Babusar top"], scene: "valley", image: "/media/stock/naran.webp" },
+  { title: "Islamabad and Lahore City Break", days: "3 days", region: "Cities", highlights: ["Faisal Mosque", "Badshahi Mosque", "Food streets"], scene: "forest", image: "/media/stock/lahore.webp" },
+  { title: "Karachi by the Sea", days: "3 days", region: "Cities", highlights: ["Clifton beach", "Mazar-e-Quaid", "Port Grand"], scene: "lake", image: "/media/stock/karachi.webp" },
+  { title: "Custom family trip", days: "Your dates", region: "Anywhere", highlights: ["Your route", "Your group size", "Your budget"], scene: "forest", image: "/media/reels/kail.webp" },
 ];
 
 export const families = {
@@ -130,7 +130,7 @@ export const steps = [
 export type Faq = { q: string; a: string };
 
 export const faqs: Faq[] = [
-  { q: "We live in the UK. Can we plan before we fly?", a: "Yes. Most families plan on WhatsApp a few weeks before they travel, so the trip is ready when they arrive." },
+  { q: "We live in Bolton (or elsewhere in the UK). Can we plan before we fly?", a: "Yes. Most families plan on WhatsApp a few weeks before they travel, so the trip is ready when they arrive." },
   { q: "Can you pick us up from our village?", a: "Yes. Pickups are available from Kotli, Khuiratta, Dadyal, Mirpur and nearby villages." },
   { q: "Is it safe for elders and small children?", a: "Trips are planned for families, with experienced drivers, regular rest stops and family friendly hotels." },
   { q: "When is the best time to visit?", a: "May to October is best for Neelum, Hunza and Skardu. Swat, Murree and Malam Jabba are also lovely in winter for snow." },
@@ -152,15 +152,15 @@ export const reels = [
 export type Vehicle = { name: string; type: string; seats: string; best: string; icon: "van" | "car" | "suv" | "jeep"; image: string };
 
 export const vehicles: Vehicle[] = [
-  { name: "Toyota HiAce", type: "Family van", seats: "Up to 14", best: "Big families and group trips", icon: "van", image: "/media/stock/hiace.jpg" },
-  { name: "Toyota Grand Cabin", type: "Van", seats: "Up to 10", best: "Long drives in comfort", icon: "van", image: "/media/stock/grandcabin.jpg" },
-  { name: "Toyota Corolla", type: "Car", seats: "4", best: "Small families and city trips", icon: "car", image: "/media/stock/corolla.jpg" },
-  { name: "Honda Civic", type: "Car", seats: "4", best: "Comfortable city and highway drives", icon: "car", image: "/media/stock/civic.jpg" },
-  { name: "Suzuki APV / Every", type: "Mini van", seats: "6 to 7", best: "Short local trips around AJK", icon: "van", image: "/media/stock/apv.jpg" },
-  { name: "Toyota Prado TX", type: "Luxury 4x4", seats: "7", best: "Luxury trips on any road", icon: "suv", image: "/media/stock/prado.jpg" },
-  { name: "Toyota Land Cruiser", type: "Luxury 4x4", seats: "7", best: "VIP and wedding guests", icon: "suv", image: "/media/stock/landcruiser.jpg" },
-  { name: "Toyota Hilux Revo 4x4", type: "4x4 pickup", seats: "4", best: "Mountain roads in Neelum and Leepa", icon: "jeep", image: "/media/stock/hilux.jpg" },
-  { name: "Mountain jeep", type: "Jeep", seats: "6", best: "Rough tracks like Ratti Gali and Taobat", icon: "jeep", image: "/media/stock/jeep.jpg" },
+  { name: "Toyota HiAce", type: "Family van", seats: "Up to 14", best: "Big families and group trips", icon: "van", image: "/media/stock/hiace.webp" },
+  { name: "Toyota Grand Cabin", type: "Van", seats: "Up to 10", best: "Long drives in comfort", icon: "van", image: "/media/stock/grandcabin.webp" },
+  { name: "Toyota Corolla", type: "Car", seats: "4", best: "Small families and city trips", icon: "car", image: "/media/stock/corolla.webp" },
+  { name: "Honda Civic", type: "Car", seats: "4", best: "Comfortable city and highway drives", icon: "car", image: "/media/stock/civic.webp" },
+  { name: "Suzuki APV / Every", type: "Mini van", seats: "6 to 7", best: "Short local trips around AJK", icon: "van", image: "/media/stock/apv.webp" },
+  { name: "Toyota Prado TX", type: "Luxury 4x4", seats: "7", best: "Luxury trips on any road", icon: "suv", image: "/media/stock/prado.webp" },
+  { name: "Toyota Land Cruiser", type: "Luxury 4x4", seats: "7", best: "VIP and wedding guests", icon: "suv", image: "/media/stock/landcruiser.webp" },
+  { name: "Toyota Hilux Revo 4x4", type: "4x4 pickup", seats: "4", best: "Mountain roads in Neelum and Leepa", icon: "jeep", image: "/media/stock/hilux.webp" },
+  { name: "Mountain jeep", type: "Jeep", seats: "6", best: "Rough tracks like Ratti Gali and Taobat", icon: "jeep", image: "/media/stock/jeep.webp" },
 ];
 
 export type SiteContent = { hero: Hero; contact: Contact; trips: Trip[]; faqs: Faq[] };

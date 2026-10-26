@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Menu, X, ChevronLeft, ChevronRight, Send, Play } from "lucide-react";
 import { nav, waLink } from "@/content/site";
+import { Logo } from "./Logo";
 import { submitEnquiry } from "@/app/actions";
 
 export function Header() {
@@ -24,8 +25,8 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex h-18 max-w-[1200px] items-center justify-between px-4 py-4 text-white">
-        <a href="#top" className="font-heading text-2xl font-semibold tracking-tight">
-          Travel with <span className="text-saffron">JD</span>
+        <a href="#top" aria-label="JD Travels home">
+          <Logo light />
         </a>
         <nav className="hidden items-center gap-7 text-sm font-medium lg:flex">
           {nav.map((n) => (
@@ -54,30 +55,6 @@ export function Header() {
         </nav>
       )}
     </header>
-  );
-}
-
-export function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          el.classList.add("is-visible");
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <div ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }}>
-      {children}
-    </div>
   );
 }
 
@@ -130,7 +107,7 @@ export function Carousel({ children }: { children: ReactNode }) {
 }
 
 export function EnquiryForm({ whatsapp, firstName }: { whatsapp: string; firstName: string }) {
-  const [f, setF] = useState({ name: "", from: "UK", people: "", dates: "", where: "Neelum Valley", website: "" });
+  const [f, setF] = useState({ name: "", from: "Bolton", people: "", dates: "", where: "Neelum Valley", website: "" });
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setF({ ...f, [k]: e.target.value });
 
   const message = `Assalam o Alaikum JD, I would like to plan a trip.
@@ -154,14 +131,14 @@ Where: ${f.where}`;
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.website} onChange={set("website")} className="hidden" />
       <input required maxLength={80} placeholder="Your name" value={f.name} onChange={set("name")} className={input} />
       <select value={f.from} onChange={set("from")} className={input}>
-        {["UK", "Europe", "Middle East", "USA or Canada", "Already in Pakistan"].map((o) => (
+        {["Bolton", "Elsewhere in the UK", "Europe", "Middle East", "USA or Canada", "Already in Pakistan"].map((o) => (
           <option key={o} className="text-ink">{o}</option>
         ))}
       </select>
       <input placeholder="How many people (adults, kids)" value={f.people} onChange={set("people")} className={input} />
       <input placeholder="Travel dates" value={f.dates} onChange={set("dates")} className={input} />
       <select value={f.where} onChange={set("where")} className={`${input} sm:col-span-2`}>
-        {["Neelum Valley", "Poonch and Banjosa", "Hunza and Skardu", "Swat and Kalam", "Naran and Kaghan", "Not sure, please suggest"].map((o) => (
+        {["Neelum Valley", "Poonch and Banjosa", "Hunza and Skardu", "Swat and Kalam", "Naran and Kaghan", "Islamabad, Lahore or Karachi", "Not sure, please suggest"].map((o) => (
           <option key={o} className="text-ink">{o}</option>
         ))}
       </select>
@@ -230,5 +207,41 @@ export function ReelCard({ video, poster, title }: { video: string; poster: stri
         </button>
       )}
     </div>
+  );
+}
+
+// Shows the poster straight away and only fetches the video after the page has loaded,
+// and never on data saver or 2G connections.
+export function HeroVideo({ src, poster, alt }: { src: string; poster: string; alt: string }) {
+  const [load, setLoad] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (conn?.saveData || /2g/.test(conn?.effectiveType ?? "")) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const start = () => setTimeout(() => setLoad(true), 300);
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => window.removeEventListener("load", start);
+  }, []);
+
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={poster} alt={alt} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" />
+      {load && (
+        <video
+          src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          onPlaying={() => setReady(true)}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}
+        />
+      )}
+    </>
   );
 }

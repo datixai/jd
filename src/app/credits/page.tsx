@@ -3,7 +3,7 @@ import path from "node:path";
 import type { Metadata } from "next";
 import { contact } from "@/content/site";
 
-export const metadata: Metadata = { title: "Photo credits | Travel with JD" };
+export const metadata: Metadata = { title: "Photo credits" };
 
 // Each line of public/media/stock/credits.txt: <file> <unsplash photo id> <photographer name>
 function stockCredits() {
@@ -21,7 +21,7 @@ export default function CreditsPage() {
   const credits = stockCredits();
   return (
     <main className="mx-auto max-w-3xl px-4 py-16">
-      <a href="/" className="text-sm text-lake hover:underline">Back to Travel with JD</a>
+      <a href="/" className="text-sm text-lake hover:underline">Back to JD Travels</a>
       <h1 className="mt-4 text-4xl font-semibold text-pine">Photo credits</h1>
       <p className="mt-4 text-muted">
         Trip videos and their cover images are by {contact.name} ({contact.instagramHandle}). Other photos are free to use under the{" "}

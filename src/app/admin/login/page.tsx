@@ -13,7 +13,7 @@ export default function LoginPage() {
           <div className="mx-auto mb-3 grid size-12 place-items-center rounded-full bg-pine text-saffron">
             <Lock className="size-5" />
           </div>
-          <h1 className="text-2xl font-semibold text-pine">Travel with JD admin</h1>
+          <h1 className="text-2xl font-semibold text-pine">JD Travels admin</h1>
           <p className="mt-1 text-sm text-muted">Sign in to manage the website</p>
         </div>
         <label className="mb-1 block text-sm font-semibold" htmlFor="email">Email</label>

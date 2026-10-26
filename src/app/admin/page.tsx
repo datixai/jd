@@ -15,7 +15,7 @@ export default async function AdminPage() {
       <header className="bg-pine-dark text-white">
         <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-3 px-4 py-4">
           <p className="font-heading text-xl font-semibold">
-            Travel with <span className="text-saffron">JD</span> <span className="ml-2 text-sm font-normal text-white/60">Admin</span>
+            JD <span className="text-saffron">Travels</span> <span className="ml-2 text-sm font-normal text-white/60">Admin</span>
           </p>
           <div className="flex items-center gap-4 text-sm">
             <span className="hidden text-white/60 sm:inline">{admin.e}</span>
