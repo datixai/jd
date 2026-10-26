@@ -361,11 +361,11 @@ export default async function Home() {
               </ul>
             </div>
           </div>
-          <div className="flex justify-center pt-8">
-            <Flags />
-          </div>
-          <div className="mt-6 flex flex-col items-center gap-2 text-sm text-white/60">
-            <p>&copy; {new Date().getFullYear()} Travel with JD. All rights reserved.</p>
+          <div className="flex flex-col gap-4 pt-8 text-left text-sm text-white/60 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <Flags />
+              <p className="mt-4">&copy; {new Date().getFullYear()} Travel with JD. All rights reserved.</p>
+            </div>
             <p>
               Developed by{" "}
               <a href="https://datixai.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-saffron hover:underline">

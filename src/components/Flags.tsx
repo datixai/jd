@@ -24,7 +24,7 @@ export function Flags() {
     { name: "UK", el: <UK /> },
   ];
   return (
-    <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
       {flags.map((f) => (
         <span key={f.name} className="inline-flex items-center gap-2 text-sm font-medium text-white/70">
           <span className="block h-5 w-[30px] overflow-hidden rounded-[2px] ring-1 ring-white/15 [&>*]:h-full [&>*]:w-full [&>img]:object-cover">{f.el}</span>
