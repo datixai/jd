@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Menu, X, ChevronLeft, ChevronRight, Send } from "lucide-react";
-import { contact, nav, waLink } from "@/content/site";
+import { nav, waLink } from "@/content/site";
+import { submitEnquiry } from "@/app/actions";
 
 export function Header() {
   const [solid, setSolid] = useState(false);
@@ -128,8 +129,8 @@ export function Carousel({ children }: { children: ReactNode }) {
   );
 }
 
-export function EnquiryForm() {
-  const [f, setF] = useState({ name: "", from: "UK", people: "", dates: "", where: "Neelum Valley" });
+export function EnquiryForm({ whatsapp, firstName }: { whatsapp: string; firstName: string }) {
+  const [f, setF] = useState({ name: "", from: "UK", people: "", dates: "", where: "Neelum Valley", website: "" });
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setF({ ...f, [k]: e.target.value });
 
   const message = `Assalam o Alaikum JD, I would like to plan a trip.
@@ -144,11 +145,14 @@ Where: ${f.where}`;
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        window.open(waLink(message), "_blank", "noopener");
+        // Open WhatsApp first (popup blockers allow it only straight after the click), then save a copy for the admin.
+        window.open(waLink(whatsapp, message), "_blank", "noopener,noreferrer");
+        submitEnquiry(f).catch(() => {});
       }}
       className="grid gap-4 sm:grid-cols-2"
     >
-      <input required placeholder="Your name" value={f.name} onChange={set("name")} className={input} />
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.website} onChange={set("website")} className="hidden" />
+      <input required maxLength={80} placeholder="Your name" value={f.name} onChange={set("name")} className={input} />
       <select value={f.from} onChange={set("from")} className={input}>
         {["UK", "Europe", "Middle East", "USA or Canada", "Already in Pakistan"].map((o) => (
           <option key={o} className="text-ink">{o}</option>
@@ -162,7 +166,7 @@ Where: ${f.where}`;
         ))}
       </select>
       <button type="submit" className="flex items-center justify-center gap-2 rounded-full bg-saffron px-6 py-3.5 font-semibold text-ink transition hover:brightness-110 sm:col-span-2">
-        <Send className="size-4" /> Send on WhatsApp to {contact.name.split(" ")[0]}
+        <Send className="size-4" /> Send on WhatsApp to {firstName}
       </button>
     </form>
   );

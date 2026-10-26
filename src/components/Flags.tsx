@@ -1,6 +1,6 @@
 function Kashmir() {
   return (
-    <svg viewBox="0 0 120 80" role="img" aria-label="Kashmir flag">
+    <svg viewBox="0 0 120 80" preserveAspectRatio="none" role="img" aria-label="Flag of Azad Jammu and Kashmir">
       <rect width="120" height="80" fill="#00843d" />
       {[8.89, 26.67, 44.44, 62.22].map((y) => (
         <rect key={y} x="30" y={y} width="90" height="8.89" fill="#fff" />
@@ -16,7 +16,7 @@ function Kashmir() {
 
 function Pakistan() {
   return (
-    <svg viewBox="0 0 120 80" role="img" aria-label="Pakistan flag">
+    <svg viewBox="0 0 120 80" preserveAspectRatio="none" role="img" aria-label="Flag of Pakistan">
       <rect width="120" height="80" fill="#01411c" />
       <rect width="30" height="80" fill="#fff" />
       <circle cx="78" cy="40" r="20" fill="#fff" />
@@ -28,7 +28,7 @@ function Pakistan() {
 
 function UK() {
   return (
-    <svg viewBox="0 0 60 40" role="img" aria-label="United Kingdom flag">
+    <svg viewBox="0 0 60 40" preserveAspectRatio="none" role="img" aria-label="Flag of the United Kingdom">
       <clipPath id="uk-clip">
         <rect width="60" height="40" />
       </clipPath>
@@ -50,12 +50,12 @@ export function Flags() {
     { name: "UK", el: <UK /> },
   ];
   return (
-    <div className="flex gap-5">
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
       {flags.map((f) => (
-        <div key={f.name} className="flex flex-col items-center gap-1.5 text-xs text-white/70">
-          <span className="block h-10 w-15 overflow-hidden rounded shadow-md [&>svg]:h-full [&>svg]:w-full">{f.el}</span>
+        <span key={f.name} className="inline-flex items-center gap-2 text-sm font-medium text-white/70">
+          <span className="block h-5 w-[30px] overflow-hidden rounded-[2px] ring-1 ring-white/15 [&>svg]:h-full [&>svg]:w-full">{f.el}</span>
           {f.name}
-        </div>
+        </span>
       ))}
     </div>
   );

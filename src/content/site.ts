@@ -12,8 +12,10 @@ export const contact = {
   facebook: "https://www.facebook.com/share/1BK4EomN7s/",
 };
 
-export const waLink = (text: string) =>
-  `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`;
+export type Contact = typeof contact;
+
+export const waLink = (whatsapp: string, text: string) =>
+  `https://wa.me/${whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 
 export const nav = [
   { label: "Destinations", href: "#destinations" },
@@ -23,7 +25,9 @@ export const nav = [
   { label: "FAQ", href: "#faq" },
 ];
 
-export const hero = {
+export type Hero = { eyebrow: string; title: string; tagline: string; text: string };
+
+export const hero: Hero = {
   eyebrow: "Family trips from Kotli, Mirpur, Dadyal and Khuiratta",
   title: "Home for the holidays. Now see the valleys.",
   tagline: "Apni wadiyan, apne log.",
@@ -109,7 +113,9 @@ export const steps = [
   { title: "Enjoy the trip", text: "Pickup from your door. Relax, JD and the team handle the rest." },
 ];
 
-export const faqs = [
+export type Faq = { q: string; a: string };
+
+export const faqs: Faq[] = [
   { q: "We live in the UK. Can we plan before we fly?", a: "Yes. Most families plan on WhatsApp a few weeks before they travel, so the trip is ready when they arrive." },
   { q: "Can you pick us up from our village?", a: "Yes. Pickups are available from Kotli, Khuiratta, Dadyal, Mirpur and nearby areas, and from Islamabad and Sialkot airports." },
   { q: "Is it safe for elders and small children?", a: "Trips are planned for families, with experienced drivers, regular rest stops and family friendly hotels." },
@@ -117,3 +123,5 @@ export const faqs = [
   { q: "How much does a trip cost?", a: "It depends on the route, days, group size and hotels. Send a message and JD will give you a clear price." },
   { q: "Can we make our own trip?", a: "Yes. Every trip can be changed, or JD can build one from scratch around your family." },
 ];
+
+export type SiteContent = { hero: Hero; contact: Contact; trips: Trip[]; faqs: Faq[] };

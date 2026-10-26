@@ -1,5 +1,6 @@
 import { CalendarDays, Check, MapPin, MessageCircle, Phone, Plane, Users, Car, Heart, UtensilsCrossed, Smartphone, ChevronDown } from "lucide-react";
-import { contact, faqs, families, hero, intro, regions, steps, trips, waLink } from "@/content/site";
+import { families, nav, intro, regions, steps, waLink as makeWaLink } from "@/content/site";
+import { getContent } from "@/lib/store";
 import { exists, listGallery } from "@/lib/media";
 import { Carousel, EnquiryForm, Header, Reveal, Tabs } from "@/components/client";
 import { Media } from "@/components/Media";
@@ -36,7 +37,11 @@ function SectionHead({ eyebrow, title, text, light = false }: { eyebrow: string;
   );
 }
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const { hero, contact, trips, faqs } = await getContent();
+  const waLink = (text: string) => makeWaLink(contact.whatsapp, text);
   const gallery = listGallery();
   const heroVideo = exists("/media/hero.mp4");
   const heroImage = exists("/media/hero.jpg");
@@ -67,7 +72,7 @@ export default function Home() {
               <p className="font-heading mt-4 text-2xl text-saffron italic sm:text-3xl">{hero.tagline}</p>
               <p className="mt-5 max-w-2xl text-lg text-white/85">{hero.text}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href={waLink("Assalam o Alaikum JD, I would like to plan a family trip.")} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 font-semibold text-ink transition hover:brightness-110">
+                <a href={waLink("Assalam o Alaikum JD, I would like to plan a family trip.")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 font-semibold text-ink transition hover:brightness-110">
                   <MessageCircle className="size-5" /> WhatsApp JD
                 </a>
                 <a href="#trips" className="rounded-full border border-white/60 px-7 py-3.5 font-semibold transition hover:bg-white hover:text-ink">
@@ -162,7 +167,7 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                    <a href={waLink(`Assalam o Alaikum JD, please send me details and price for: ${t.title}`)} target="_blank" rel="noopener" className="mt-auto rounded-full border border-pine py-2.5 text-center text-sm font-semibold text-pine transition hover:bg-pine hover:text-white">
+                    <a href={waLink(`Assalam o Alaikum JD, please send me details and price for: ${t.title}`)} target="_blank" rel="noopener noreferrer" className="mt-auto rounded-full border border-pine py-2.5 text-center text-sm font-semibold text-pine transition hover:bg-pine hover:text-white">
                       Ask for price
                     </a>
                   </div>
@@ -242,10 +247,10 @@ export default function Home() {
               </div>
             )}
             <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <a href={contact.instagram} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full bg-pine px-6 py-3 font-semibold text-white transition hover:brightness-125">
+              <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-pine px-6 py-3 font-semibold text-white transition hover:brightness-125">
                 <Instagram className="size-5" /> Follow on Instagram
               </a>
-              <a href={contact.facebook} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full border border-pine px-6 py-3 font-semibold text-pine transition hover:bg-pine hover:text-white">
+              <a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-pine px-6 py-3 font-semibold text-pine transition hover:bg-pine hover:text-white">
                 <Facebook className="size-5" /> Facebook page
               </a>
             </div>
@@ -282,16 +287,16 @@ export default function Home() {
                 <a href={`tel:${contact.phoneTel}`} className="flex items-center gap-3 text-lg font-semibold hover:text-saffron">
                   <Phone className="size-5 text-saffron" /> {contact.phoneDisplay}
                 </a>
-                <a href={contact.instagram} target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-saffron">
+                <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-saffron">
                   <Instagram className="size-5 text-saffron" /> {contact.instagramHandle}
                 </a>
-                <a href={contact.facebook} target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-saffron">
+                <a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-saffron">
                   <Facebook className="size-5 text-saffron" /> Travel with JD on Facebook
                 </a>
               </div>
             </Reveal>
             <Reveal delay={150} className="rounded-[22px] border border-white/15 bg-white/5 p-6 backdrop-blur sm:p-8">
-              <EnquiryForm />
+              <EnquiryForm whatsapp={contact.whatsapp} firstName={contact.name.split(" ")[0]} />
             </Reveal>
           </div>
         </section>
@@ -306,26 +311,33 @@ export default function Home() {
                 Travel with <span className="text-saffron">JD</span>
               </p>
               <p className="mt-3 max-w-xs text-white/60">Family trips to Azad Kashmir, Gilgit-Baltistan and Swat, organised by {contact.name}.</p>
+              <div className="mt-6">
+                <Flags />
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 font-semibold">Explore</p>
+              <ul className="space-y-2 text-white/70">
+                {nav.map((n) => (
+                  <li key={n.href}><a href={n.href} className="hover:text-saffron">{n.label}</a></li>
+                ))}
+              </ul>
             </div>
             <div>
               <p className="mb-3 font-semibold">Contact</p>
               <ul className="space-y-2 text-white/70">
                 <li><a href={`tel:${contact.phoneTel}`} className="hover:text-saffron">{contact.phoneDisplay}</a></li>
-                <li><a href={waLink("Assalam o Alaikum JD")} target="_blank" rel="noopener" className="hover:text-saffron">WhatsApp</a></li>
-                <li><a href={contact.instagram} target="_blank" rel="noopener" className="hover:text-saffron">Instagram</a></li>
-                <li><a href={contact.facebook} target="_blank" rel="noopener" className="hover:text-saffron">Facebook</a></li>
+                <li><a href={waLink("Assalam o Alaikum JD")} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">WhatsApp</a></li>
+                <li><a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Instagram</a></li>
+                <li><a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-saffron">Facebook</a></li>
               </ul>
-            </div>
-            <div>
-              <p className="mb-3 font-semibold">Serving families from</p>
-              <Flags />
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-3 pt-6 text-sm text-white/60 sm:flex-row">
             <p>&copy; {new Date().getFullYear()} Travel with JD. All rights reserved.</p>
             <p>
               Developed by{" "}
-              <a href="https://datixai.com" target="_blank" rel="noopener" className="font-semibold text-saffron hover:underline">
+              <a href="https://datixai.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-saffron hover:underline">
                 Datix AI
               </a>
             </p>
@@ -337,7 +349,7 @@ export default function Home() {
       <a
         href={waLink("Assalam o Alaikum JD, I would like to plan a trip.")}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         aria-label="WhatsApp JD"
         className="fixed right-5 bottom-5 z-40 grid size-14 place-items-center rounded-full bg-[#25d366] text-white shadow-xl transition hover:scale-110"
       >
