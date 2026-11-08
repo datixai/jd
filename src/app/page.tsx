@@ -2,7 +2,7 @@ import { CalendarDays, Check, MapPin, MessageCircle, Phone, Plane, Users, Car, H
 import { families, intro, photos, regions, reels, steps, vehicles, waLink as makeWaLink } from "@/content/site";
 import { getContent } from "@/lib/store";
 import { exists } from "@/lib/media";
-import { Carousel, EnquiryForm, Header, HeroVideo, Tabs, WhatsAppFloat } from "@/components/client";
+import { Carousel, EnquiryForm, Header, Tabs, WhatsAppFloat } from "@/components/client";
 import { Vehicles } from "@/components/Vehicles";
 import { Gallery } from "@/components/Gallery";
 import { Reveal } from "@/components/Reveal";
@@ -10,13 +10,10 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { Facebook, Instagram } from "@/components/SocialIcons";
 import { SITE_URL } from "@/lib/site-url";
 import { Media } from "@/components/Media";
-import { Scene } from "@/components/Scene";
 import { Flags } from "@/components/Flags";
 
 const pointIcons = [Plane, Car, Users, UtensilsCrossed, Smartphone, Heart];
 
-const HERO_VIDEO = "/media/reels/neelum.mp4";
-const HERO_POSTER = "/media/reels/neelum.webp";
 
 function SectionHead({ eyebrow, title, text, light = false }: { eyebrow: string; title: string; text?: string; light?: boolean }) {
   return (
@@ -31,7 +28,6 @@ function SectionHead({ eyebrow, title, text, light = false }: { eyebrow: string;
 export default async function Home() {
   const { hero, contact, trips, faqs } = await getContent();
   const waLink = (text: string) => makeWaLink(contact.whatsapp, text);
-  const heroVideo = exists(HERO_VIDEO);
   const reelList = reels.filter((r) => exists(`/media/${r.file}.mp4`));
   const photoList = photos.filter((p) => exists(`/media/${p.file}.webp`));
 
@@ -66,12 +62,12 @@ export default async function Home() {
         {/* Hero */}
         <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-pine-dark text-white">
           <div className="absolute inset-0">
-            {heroVideo ? (
-              <HeroVideo src={HERO_VIDEO} poster={HERO_POSTER} alt="Neelum Valley, Azad Jammu Kashmir" />
-            ) : (
-              <Scene name="river" className="h-full w-full" />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-black/50" />
+            <picture>
+              <source media="(max-width: 768px)" srcSet="/media/hero-mobile.webp" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/media/hero.webp" alt="Snow peaks above Chunda Valley, Skardu. Photo by JD" fetchPriority="high" className="hero-zoom h-full w-full object-cover object-[center_30%]" />
+            </picture>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/45" />
           </div>
           <div className="relative mx-auto w-full max-w-[1200px] px-4 pt-32 pb-20 text-center sm:pb-28">
             <div className="hero-in">

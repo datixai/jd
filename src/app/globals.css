@@ -50,6 +50,10 @@ h1, h2, h3, .font-heading {
   animation: wa-ring 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
+/* Slow zoom on the hero photo */
+@keyframes hero-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+.hero-zoom { animation: hero-zoom 8s ease-out both; }
+
 /* Hero entrance */
 @keyframes rise {
   from { opacity: 0; transform: translateY(24px); }
@@ -78,5 +82,5 @@ h1, h2, h3, .font-heading {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { animation: none; }
-  .wa-ring, .hero-in > *, .drive, .wheel, .vehicle-card { animation: none; }
+  .wa-ring, .hero-in > *, .drive, .wheel, .vehicle-card, .hero-zoom { animation: none; }
 }
