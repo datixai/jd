@@ -1,4 +1,4 @@
-"""JD Travels roll-up standee for @jds_wonders (University of Kotli event).
+"""JD Travels roll-up standee for @jds_wonders (event sponsor standee).
 Same sizes as the UOK MUN standee: 1890 px wide at 96 dpi, heights 3780 (1:2) and 4536 (1:2.4),
 PDF pages 1417.5 x 2835 pt and 1417.5 x 3402 pt, no bleed.
 Rendered here at 2x (192 dpi on the same page size) with the QR drawn as vectors in the PDF.
@@ -182,7 +182,7 @@ def build(H1, name):
     # sponsor pill
     y += tile + u(70 * gapk)
     f_sp = font('segoeuib.ttf', 40)
-    sp = 'PROUD SPONSOR  |  UNIVERSITY OF KOTLI EVENT'
+    sp = 'PROUD SPONSOR'
     spw = text_w(d, sp, f_sp, 4)
     px0, px1 = W / 2 - spw / 2 - u(46), W / 2 + spw / 2 + u(46)
     pill = Image.new('RGBA', img.size, (0, 0, 0, 0))
